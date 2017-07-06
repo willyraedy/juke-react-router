@@ -3,7 +3,8 @@ import axios from 'axios';
 import AlbumCollection from './AlbumCollection.js'
 import Songs from './Songs.js'
 import {Link} from 'react-router-dom'
-import {HashRouter, Route} from 'react-router-dom'
+import {HashRouter, Route, Switch} from 'react-router-dom'
+import NotFound from './404'
 
 class SingleArtist extends Component{
   constructor(){
@@ -32,12 +33,19 @@ class SingleArtist extends Component{
         <h4>SONGS</h4>
         <Songs songs = {this.state.songs}/>*/}
         <ul>
-          <li><Link to={`/artists/${this.state.artist.id}/albums`}>ALBUMS</Link></li>
-          <li><Link to="ph">SONGS</Link></li>
+          <li><Link to={`${this.props.match.url}/albums`}>ALBUMS</Link></li>
+          <li><Link to={`${this.props.match.url}/songs`}>SONGS</Link></li>
         </ul>
 
         <HashRouter>
-          <Route path={`/artists/:artistId/albums`} render={ (routeProps)=> <AlbumCollection albums = {this.state.albums} /> } />
+          <div>
+            <Switch>
+              <Route exact path={`${this.props.match.url}`} />
+              <Route path={`${this.props.match.url}/albums`} render={ (routeProps)=> <AlbumCollection albums = {this.state.albums} /> } />
+              <Route path = {`${this.props.match.url}/songs`} render = {(routeProps) => <Songs songs = {this.state.songs} /> }/>
+              <Route path = '/*' component={NotFound} />
+            </Switch>
+          </div>
         </HashRouter>
 
       </div>

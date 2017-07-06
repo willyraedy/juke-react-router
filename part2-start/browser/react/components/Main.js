@@ -5,8 +5,9 @@ import Sidebar from './Sidebar';
 import Player from './Player';
 import AllArtists from './AllArtists.js'
 import SingleArtist from './SingleArtist.js'
+import NotFound from './404'
 
-import {HashRouter, Route} from 'react-router-dom'
+import {HashRouter, Route, Switch} from 'react-router-dom'
 
 export default class Main extends Component {
 
@@ -38,15 +39,14 @@ export default class Main extends Component {
           <Sidebar />
         </div>
           <div className="col-xs-10">
-            <Route exact path='/' component={AllAlbums}></Route>
-            <Route exact path='/albums' component={AllAlbums}></Route>
-            <Route path = '/albums/:albumId' component = {SingleAlbum} />
-            <Route exact path = '/artists' component = {AllArtists}/>
-            <Route path = '/artists/:artistId' component = {SingleArtist}/>
-
-
-            {/*<SingleAlbum album={this.state.selectedAlbum} />
-            <AllAlbums albums={this.state.albums} selectAlbum={this.selectAlbum} />*/}
+            <Switch>
+              <Route exact path='/' component={AllAlbums}></Route>
+              <Route exact path='/albums' component={AllAlbums}></Route>
+              <Route exact path = '/albums/:albumId' component = {SingleAlbum} />
+              <Route exact path = '/artists' component = {AllArtists}/>
+              <Route path = '/artists/:artistId' component = {SingleArtist}/>
+              <Route path = '*' component={NotFound} />
+            </Switch>
           </div>
         <Player />
       </div>
