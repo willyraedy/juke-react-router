@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Songs from '../components/Songs';
 import axios from 'axios';
+import ShareEmail from './ShareEmail.js'
 
 const fakeAlbum = {
     name: 'Yellow Submarine',
@@ -39,7 +40,8 @@ export default class SingleAlbum extends Component {
     return (
       <div className="album">
         <div>
-          <h3>{ album.name }</h3>
+          <h3>{ album.name }  <ShareEmail url = {this.props.match.url}/>
+          </h3>
           <img src={ album.imageUrl } className="img-thumbnail" />
         </div>
         <Songs songs={album.songs} />
